@@ -44,6 +44,37 @@ A multi-agent AI system that automates the entire document analysis pipeline:
 | Manual data entry | 60% of team time | <10% |`,
   },
   {
+    slug: "licensed-adviser-copilot",
+    title: "Licensed Adviser Copilot",
+    client: "SFC-Licensed Corporation",
+    description:
+      "Research copilot for licensed advisers — the AI prepares, humans decide, regulators can audit everything.",
+    pubDate: "2026-08-20",
+    tags: ["RAG", "Human Review", "Audit Trail", "Governance"],
+    featured: false,
+    body: `## The Challenge
+
+An SFC-licensed corporation wanted AI assistance across its advisory workflow. The first scope on the table crossed a line: AI-drafted investment recommendations delivered straight to end-clients. That would have made the vendor part of the regulated activity — and complicated the firm's own position under the SFC's generative AI guidance.
+
+## What We Built
+
+The scope was redrawn before a contract was signed: the system prepares, licensed humans decide.
+
+- **Grounded Research Copilot** — Retrieval over the firm's own research and client files, with citations, for its licensed advisers only
+- **Human Review Gate** — Every AI draft routes to a named adviser for approve, edit, or reject; nothing reaches a client without human sign-off
+- **Use-Case Risk Mapping** — Each AI function classified against the SFC's high-risk/low-risk framework, with documentation supporting the firm's notification file
+- **Audit and Explainability Layer** — Hash-chained audit trail, model-version pinning, and regulator-ready explainability exports
+
+## Results
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Research prep per mandate | 6 hours | 45 minutes |
+| Advice sent without human sign-off | Untracked | 0 — 100% review-gated |
+| Regulator inquiry preparation | 2 weeks | Same day |
+| AI use-case documentation | Ad hoc | Complete, notification-ready |`,
+  },
+  {
     slug: "sme-lending-platform",
     title: "SME Lending Platform",
     client: "Regional Bank",

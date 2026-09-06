@@ -17,11 +17,13 @@
     /* Structure */
     --color-line: #d6d8d1;
 
-    /* Accent (deep navy: meets AA 4.5:1 as text on bg/surface AND with white text).
-       Navy carries interaction and emphasis. Green is reserved for
-       "live / healthy / positive" status indicators only. */
-    --color-accent: #1f4a63;
-    --color-accent-soft: #e6ecf0;
+    /* Accent (JS&C sage #80988f, the brand's single accent color per
+       DESIGN-jonathansimpson.md). Sage carries interaction and emphasis.
+       Note: sage on cream/white is roughly 2.5:1 — fine for eyebrows,
+       icons, borders and hover states, below AA for small body text.
+       Green (--color-ok) stays reserved for live/healthy/positive status. */
+    --color-accent: #80988f;
+    --color-accent-soft: #e3e9e6;
 
     --color-ok: #2e6b53;
     --color-ok-soft: #e4ece7;
@@ -1039,7 +1041,7 @@ main:has(.kb-shell) {
 }
 .mention-item:hover,
 .mention-item.is-active {
-  background: var(--color-accent-soft, #eef4f2);
+  background: var(--color-accent-soft, #e3e9e6);
 }
 .mention-item-name {
   overflow: hidden;
@@ -1219,9 +1221,9 @@ main:has(.kb-shell) {
    Marketing pages (ported 1:1 from the Astro site, 2026-09-04)
    ============================================================ */
 
-/* Editorial palette, scoped to marketing routes. The demo app's tokens use
-   the navy accent; the Astro marketing site used the sage JS&C editorial
-   look, so marketing pages carry their own accent + typography tokens. */
+/*   Editorial palette, scoped to marketing routes. Both the demo app and the
+   marketing pages now share the sage JS&C accent; marketing pages also carry
+   their own typography tokens. */
 .marketing-page {
   --color-accent: #80988f;
   --color-accent-soft: #e3e9e6;

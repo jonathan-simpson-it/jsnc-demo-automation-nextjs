@@ -30,6 +30,7 @@ import type {
   ReplyIntent,
   SavedDraft,
   UploadResult,
+  AssuranceManifest,
 } from "./types";
 import { apiHeaders, getApiKey } from "./api-key";
 
@@ -41,6 +42,13 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
   return res.json();
 }
+
+/* ---- Compliance assurance pack ---- */
+
+export const fetchAssuranceManifest = () =>
+  apiFetch<AssuranceManifest>("/api/assurance/manifest");
+/** URL for downloading the compliance assurance pack (Markdown attachment). */
+export const assurancePackUrl = () => "/api/assurance/pack";
 
 /* ---- Health / Agents ---- */
 

@@ -25,7 +25,7 @@ backend via Next.js rewrites; when `BACKEND_URL` is unset it targets
 
 - **Marketing pages** (static, editorial look): `/services`, `/work` (+ case
   studies), `/blog` (+ posts), `/products`, `/applications`, `/contact`,
-  `/support`, plus `robots.txt` and `sitemap.xml`.
+  `/support`, `/compliance`, plus `robots.txt` and `sitemap.xml`.
 - **Demo pages**: `/` (home/launchpad), `/chat`, `/documents`, `/eval`,
   `/summary`, `/config`, `/mailbox`, `/review-hub`, `/radar`, `/telemetry`,
   `/workbench/*`.

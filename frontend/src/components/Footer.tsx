@@ -28,7 +28,10 @@ export default function Footer() {
           { label: "Products", href: "/products" },
           { label: "Applications", href: "/applications" },
         ],
-        help: [{ label: "Support & FAQ", href: "/support" }],
+        help: [
+          { label: "Compliance", href: "/compliance" },
+          { label: "Support & FAQ", href: "/support" },
+        ],
         start: { label: "Start a project", href: "/contact" },
       }
     : {

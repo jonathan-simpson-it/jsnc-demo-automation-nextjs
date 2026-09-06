@@ -299,6 +299,14 @@ export interface RegulatoryState {
   running: boolean;
 }
 
+/* ---- Compliance assurance pack ---- */
+
+export interface AssuranceManifest {
+  format: string;
+  download: string;
+  sections: string[];
+}
+
 export interface GraphEmail {
   id: string;
   subject: string;

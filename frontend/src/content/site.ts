@@ -43,6 +43,7 @@ export const siteConfig = {
     "/applications",
     "/contact",
     "/support",
+    "/compliance",
   ],
   socialLinks: [
     { label: "LinkedIn", href: "https://www.linkedin.com/company/jonathan-simpson-co" },
@@ -154,6 +155,26 @@ export const siteConfig = {
     { q: "Can you support systems after launch?", a: "Yes. We offer ongoing support and iteration contracts." },
     { q: "What technologies do you use?", a: "Python (LangGraph, LangChain, FastAPI), TypeScript (Next.js, React), ChromaDB, DeepSeek API, and cloud platforms." },
   ],
+  // Regulatory positioning (see docs/regulatory-positioning.md). Rendered on
+  // /compliance only — the /support FAQ stays procurement-focused.
+  complianceFaqs: [
+    {
+      q: "Do you need an SFC licence or a licensing exam to do this work?",
+      a: "No. We are a technology services provider. Licensing applies to firms and individuals performing regulated activities under the Securities and Futures Ordinance — advising on securities, automated trading, asset management. We perform none of them: we build and implement systems for licensed firms, and the regulated decision always stays with the licensed client.",
+    },
+    {
+      q: "Does using your systems create licensing issues for our firm?",
+      a: "No. Our systems support obligations you already carry as a licensed firm — oversight of outsourced technology, audit and record-keeping, model governance, and data protection. They add evidence and controls, not new regulated activities.",
+    },
+    {
+      q: "Does the AI give investment advice to our clients?",
+      a: "No. Agents analyse your own documents and return grounded, cited findings for your staff to review. Nothing is delivered without human sign-off through the review workflow, and nothing goes to your end-clients in our name.",
+    },
+    {
+      q: "What do you provide for our due-diligence file?",
+      a: "A positioning statement, architecture and data-flow documentation naming every subprocessor, model-version records with config hashes, tamper-evident audit-trail exports, explainability reports, and an exit plan covering full data export. The audit-trail, model-version, and explainability evidence is available as a single downloadable assurance pack, generated live from the platform's compliance stores.",
+    },
+  ] as const,
   contactInfo: {
     email: "hello@jonathansimpson.co",
     region: "We work with growth-stage financial institutions across Hong Kong, Singapore, and London.",

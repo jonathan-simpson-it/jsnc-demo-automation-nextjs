@@ -4,7 +4,7 @@ import { getBlogPosts } from "@/content/blog";
 import { getProjects } from "@/content/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = ["/", "/services", "/work", "/blog", "/products", "/applications", "/contact", "/support"];
+  const staticPages = ["/", "/services", "/work", "/blog", "/products", "/applications", "/contact", "/support", "/compliance"];
   const entries: MetadataRoute.Sitemap = staticPages.map((p) => ({
     url: `${siteConfig.siteUrl}${p}`,
     changeFrequency: "weekly",
