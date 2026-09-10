@@ -3,6 +3,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { KeySettings } from "@/components/KeySettings";
+import AccountMenu from "@/components/AccountMenu";
+import { byokDevEnabled } from "@/lib/api-key";
 import { siteConfig } from "@/content/site";
 
 const TOOL_NAV = [
@@ -53,7 +55,7 @@ export default function Header() {
               );
             })}
           </nav>
-          {!marketing && <KeySettings />}
+          {!marketing && byokDevEnabled && <KeySettings />}
           {marketing && (
             <Link href="/chat"
               className="inline-flex h-8 shrink-0 items-center justify-center rounded-full border border-line bg-surface px-3.5 text-xs font-semibold uppercase tracking-wider text-ink transition hover:border-accent hover:text-accent"
@@ -61,6 +63,7 @@ export default function Header() {
               Live demo
             </Link>
           )}
+          <AccountMenu />
         </div>
       </header>
     </>

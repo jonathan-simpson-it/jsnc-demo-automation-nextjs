@@ -11,10 +11,14 @@ if (process.env.NODE_ENV === "production" && !process.env.BACKEND_URL) {
 const nextConfig = {
   output: "standalone",
   async rewrites() {
-    return [
-      { source: "/api/:path*", destination: `${BACKEND_URL}/api/:path*` },
-      { source: "/health", destination: `${BACKEND_URL}/health` },
-    ];
+    // fallback: only proxy to the Python service when no local route handler
+    // matches. Auth (/api/auth/*) and the BFF (/api/v1/*) are local.
+    return {
+      fallback: [
+        { source: "/api/:path*", destination: `${BACKEND_URL}/api/:path*` },
+        { source: "/health", destination: `${BACKEND_URL}/health` },
+      ],
+    };
   },
 };
 module.exports = nextConfig;

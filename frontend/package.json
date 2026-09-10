@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "test": "DATABASE_URL=postgresql://payo:payo_dev_password@localhost:5432/payo_test prisma migrate deploy && DATABASE_URL=postgresql://payo:payo_dev_password@localhost:5432/payo_test BETTER_AUTH_SECRET=vitest-secret-not-for-production BETTER_AUTH_URL=http://localhost:3000 vitest run"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.7.4",
@@ -20,7 +21,7 @@
     "resend": "^6.27.0"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "^24.13.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.4.0",
@@ -28,6 +29,7 @@
     "postcss": "^8.4.0",
     "prisma": "^7.10.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "vitest": "^5.0.0"
   }
 }

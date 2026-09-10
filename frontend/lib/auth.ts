@@ -1,21 +1,12 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "@better-auth/prisma-adapter";
 import { magicLink, organization } from "better-auth/plugins";
-import { createAccessControl } from "better-auth/plugins/access";
-import { defaultStatements } from "better-auth/plugins/organization/access";
 import { nextCookies } from "better-auth/next-js";
 import { prisma } from "@/lib/prisma";
 import { sendInvitationEmail, sendMagicLinkEmail } from "@/lib/email";
+import { ac, customRoles } from "@/lib/auth-roles";
 
 const siteUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
-
-// Organisation roles: built-in owner/admin keep full management; the
-// domain roles below carry no member/invitation management rights — their
-// distinctions are enforced by application policy, not org administration.
-const ac = createAccessControl(defaultStatements);
-const analyst = ac.newRole({});
-const reviewer = ac.newRole({});
-const viewer = ac.newRole({});
 
 export const auth = betterAuth({
   baseURL: siteUrl,
@@ -38,7 +29,7 @@ export const auth = betterAuth({
     }),
     organization({
       ac,
-      roles: { analyst, reviewer, viewer },
+      roles: customRoles,
       requireEmailVerificationOnInvitation: true,
       sendInvitationEmail: async (data) => {
         await sendInvitationEmail({

@@ -1,5 +1,9 @@
 const STORAGE_KEY = "jsco.deepseekApiKey";
 
+// BYOK exists only as an explicit development mechanism for the pre-SaaS demo.
+// In normal (SaaS) mode provider keys are server-side and this is disabled.
+export const byokDevEnabled = process.env.NEXT_PUBLIC_BYOK_DEV === "1";
+
 type Listener = (key: string) => void;
 const listeners = new Set<Listener>();
 
@@ -42,6 +46,7 @@ export function subscribeApiKey(cb: Listener): () => void {
 
 /** Header map sent with every backend request that may call the LLM. */
 export function apiHeaders(): Record<string, string> {
+  if (!byokDevEnabled) return {};
   const key = getApiKey();
   return key ? { "X-API-Key": key } : {};
 }
