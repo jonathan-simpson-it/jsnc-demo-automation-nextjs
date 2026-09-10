@@ -1,2 +1,12 @@
 frontend/.next/
 frontend/node_modules/
+
+# Local environment (never commit)
+.env
+.env.*
+!.env.example
+
+/generated/prisma
+
+# Prisma generated client (regenerate via `npm install` / `npx prisma generate`)
+generated/
