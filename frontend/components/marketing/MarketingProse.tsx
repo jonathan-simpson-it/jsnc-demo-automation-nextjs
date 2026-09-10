@@ -44,7 +44,7 @@ function parseTable(lines: string[]): string[][] {
   return rows;
 }
 
-/** Renders the markdown bodies stored in frontend/src/content/. */
+/** Renders the markdown bodies stored in frontend/content/. */
 export default function MarketingProse({ text }: { text: string }) {
   const lines = text.split("\n");
   const blocks: ReactNode[] = [];

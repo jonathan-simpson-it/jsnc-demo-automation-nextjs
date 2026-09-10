@@ -5,7 +5,7 @@ import MarketingProse from "@/components/marketing/MarketingProse";
 import { getProject, getProjects } from "@/content/projects";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -15,7 +15,8 @@ export function generateStaticParams() {
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = getProject(params.slug);
+  const { slug } = await params;
+  const project = getProject(slug);
   if (!project) return {};
   return {
     title: `${project.title} — Jonathan Simpson & Co.`,
@@ -23,8 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function WorkDetailPage({ params }: Props) {
-  const project = getProject(params.slug);
+export default async function WorkDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const project = getProject(slug);
   if (!project) notFound();
 
   const schema = {
