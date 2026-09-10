@@ -1,7 +1,8 @@
-# JS&C — Next.js App (Marketing + AI Platform Demo)
+# JS&C — Next.js App (Marketing + AI Platform)
 
-Jonathan Simpson & Co. — the marketing site and the live private-markets AI
-demo, in one Next.js 14 App Router application (TypeScript + Tailwind).
+Jonathan Simpson & Co. — the marketing site and the private-markets AI
+workspace, in one Next.js 16 App Router application (TypeScript + Tailwind),
+with a PostgreSQL-backed SaaS control plane (Better Auth + Prisma).
 
 > The Python backend lives in the separate
 > [`jsnc-demo-automation-python`](https://github.com/jonathan-simpson-it/jsnc-demo-automation-python)
@@ -12,43 +13,70 @@ demo, in one Next.js 14 App Router application (TypeScript + Tailwind).
 ## Quick start
 
 ```bash
+# Node 24 is required (.nvmrc); Prisma 7 needs >= 20.19.
+# Start PostgreSQL (pgvector) once, from the Python repo:
+#   docker compose up -d postgres
+
 cd frontend
-npm install
-cp .env.example .env.local    # optional; defaults cover local dev
+npm install                   # generates the Prisma client (postinstall)
+cp .env.example .env          # set BETTER_AUTH_SECRET (openssl rand -base64 32)
+npx prisma migrate dev        # create/update the local schema
 npm run dev
 ```
 
-Open http://localhost:3000. The app proxies `/api/*` and `/health` to the
-backend via Next.js rewrites; when `BACKEND_URL` is unset it targets
-`http://127.0.0.1:8000` (a locally running backend).
+Open http://localhost:3000.
+
+- With no `RESEND_API_KEY`, magic links and invitations print to the dev
+  server console as `[dev-email]` lines. Production requires Resend.
+- Workspace surfaces (`/chat`, `/documents`, `/settings`, …) require sign-in;
+  marketing pages stay public.
+- The Python service is optional for auth/workspace work. When `BACKEND_URL`
+  is unset it defaults to `http://127.0.0.1:8000`; fallback rewrites proxy
+  `/api/*` and `/health` to it, while `/api/auth/*` and `/api/v1/*` are local
+  route handlers.
 
 ## What lives here
 
 - **Marketing pages** (static, editorial look): `/services`, `/work` (+ case
   studies), `/blog` (+ posts), `/products`, `/applications`, `/contact`,
   `/support`, `/compliance`, plus `robots.txt` and `sitemap.xml`.
-- **Demo pages**: `/` (home/launchpad), `/chat`, `/documents`, `/eval`,
-  `/summary`, `/config`, `/mailbox`, `/review-hub`, `/radar`, `/telemetry`,
-  `/workbench/*`.
-- Header/footer switch between marketing and demo navigation based on the
-  route; marketing pages link to the demo via a "Live demo" button.
+- **Workspace pages** (gated, under `app/(app)/`): `/chat`, `/documents`,
+  `/eval`, `/summary`, `/config`, `/mailbox`, `/review-hub`, `/radar`,
+  `/telemetry`, `/workbench/*`, `/settings`.
+- **Auth pages**: `/sign-in` (magic link), `/accept-invitation/[id]`.
+
+## SaaS control plane
+
+- Prisma owns all DDL (`prisma/schema.prisma`, `prisma/migrations/`); Python
+  will read/write the same database in a later phase. See `PRODUCT.md` for
+  product context and `docs/` in the Python repo for the architecture.
+- Better Auth: magic link (Resend), organisation plugin with roles
+  `owner`/`admin`/`analyst`/`reviewer`/`viewer`, single-use invitations that
+  expire after 7 days, email verification required to accept an invitation.
+- Tenant context always derives from the session (`lib/tenant.ts`); the BFF
+  `/api/v1/*` handlers never accept an organisation id from the caller.
 
 ## Environment variables
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `BACKEND_URL` | `http://127.0.0.1:8000` | Backend origin for the `/api/*` and `/health` rewrites |
+| `BACKEND_URL` | `http://127.0.0.1:8000` | Python backend origin for fallback rewrites |
 | `NEXT_PUBLIC_SITE_URL` | `https://jonathansimpson.co` | Metadata/canonical/sitemap origin |
+| `DATABASE_URL` | – | PostgreSQL connection string |
+| `BETTER_AUTH_SECRET` | – | Session/encryption secret (32+ chars) |
+| `BETTER_AUTH_URL` | `http://localhost:3000` | Better Auth base URL |
+| `RESEND_API_KEY` | – | Transactional email; unset = dev console fallback |
+| `RESEND_FROM_EMAIL` | `JS&C AI <no-reply@…>` | Sender address |
+| `NEXT_PUBLIC_BYOK_DEV` | – | `1` re-enables the pre-SaaS BYOK key dialog for local demos |
 
 ## Verification
 
 ```bash
-cd frontend && npx tsc --noEmit && npm run build
+npm run typecheck        # tsc --noEmit
+npm run build            # production build
+npm test                 # vitest integration suite (needs Docker Postgres)
 ```
 
-## Deployment
-
-Import this repo into Vercel with Root Directory `frontend`, and set
-`BACKEND_URL` to the deployed Python backend URL. See
-`jsnc-demo-automation-python`'s `docs/architecture.md` for the deployment
-topology.
+The test suite migrates a disposable `payo_test` database, then drives real
+magic-link sign-in, invitations (single-use, expiry) and cross-organisation
+isolation against it.
