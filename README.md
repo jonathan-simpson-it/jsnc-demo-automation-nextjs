@@ -5,8 +5,9 @@ demo, in one Next.js 14 App Router application (TypeScript + Tailwind).
 
 > The Python backend lives in the separate
 > [`jsnc-demo-automation-python`](https://github.com/jonathan-simpson-it/jsnc-demo-automation-python)
-> repository. Deployment topology is documented in the combined repo's
-> `docs/deploy.md`.
+> repository. Deployment topology and the platform's architecture/security
+> docs live in that repo's `docs/` directory (architecture.md,
+> security-threat-model.md, migration-notes.md).
 
 ## Quick start
 
@@ -48,5 +49,6 @@ cd frontend && npx tsc --noEmit && npm run build
 ## Deployment
 
 Import this repo into Vercel with Root Directory `frontend`, and set
-`BACKEND_URL` to the deployed Python backend URL. See the combined repo's
-`docs/deploy.md` for the full runbook.
+`BACKEND_URL` to the deployed Python backend URL. See
+`jsnc-demo-automation-python`'s `docs/architecture.md` for the deployment
+topology.
